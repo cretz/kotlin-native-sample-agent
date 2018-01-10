@@ -1,0 +1,2 @@
+headers = jvmti.h
+excludedFunctions = JNI_GetDefaultJavaVMInitArgs JNI_CreateJavaVM JNI_GetCreatedJavaVMs JNI_OnLoad JNI_OnUnload Agent_OnLoad Agent_OnAttach Agent_OnUnload
