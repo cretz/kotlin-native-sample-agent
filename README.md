@@ -38,3 +38,22 @@ When run on Windows for me, this is the output::
     Hello, World!
 
 That's basically it for this PoC. I might add a linux version at some point.
+
+### What Did We Learn?
+
+Notes (only valid as of the time this was written):
+
+* Kotlin Native is a pain to use with IDEA and it's unfortunate that they are going w/ CLion
+* There is no good way to pass C-instantiated objects into Kotlin
+  * But you can pass `Long`s and work with them like pointers which is nice
+* There is no good way to export top-level symbols from Kotlin Native
+  * But a C/C++ shim is doable
+* There is no easy way to add your own C/C++ files to the build
+  * I had to add the C++ file and then export all symbols so it would not override exports from existing Kotlin files
+* The concept of nullable native pointers really meshes well with Kotlin's null checks 
+* All of the interop names and aliases can become confusing because of similar names
+  * E.g. `CPointer` vs `CPointed` vs `CPointerVar` vs `CPointerVarOf`
+  * Someone needs to write the `Kotlinomicon` like [they did for Rust](https://doc.rust-lang.org/nomicon/)
+* In gradle, `linkerOpts` actually goes to `clang++`, so I had to add `-Xlinker`
+* In gradle, spaces in Windows' paths are not handled properly in `linkerOpts` and you have to manually quote them
+* Overall, Kotlin Native has a very bright future. Once you are out of the FFI world, things should be smooth.
