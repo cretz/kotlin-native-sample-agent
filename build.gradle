@@ -3,18 +3,18 @@ apply plugin: 'konan'
 def jdkHome = file(System.properties.'java.home').parentFile.toPath()
 def includeBase = jdkHome.resolve('include')
 def includeWin32 = includeBase.resolve('win32')
-def isWindows = org.gradle.internal.os.OperatingSystem.current().isWindows()
 
 konanArtifacts {
     interop('jvmti') {
-        includeDirs includeBase, includeWin32
+        target 'mingw', {
+            includeDirs includeBase, includeWin32
+        }
     }
 
     dynamic('sampleagent') {
         libraries {
             artifact 'jvmti'
         }
-        dumpParameters true
         target 'mingw', {
             linkerOpts '-Xlinker', '--export-all-symbols', 'src/main/cpp/kotlin_bridge.cpp',
                 '-I', '\\"' + includeBase.toString() + '\\"', '-I', '\\"' + includeWin32.toString() + '\\"',

@@ -1,7 +1,8 @@
 # Kotlin Native Sample JVMTI Agent
 
 This is a sample of creating a [JVMTI agent](https://docs.oracle.com/javase/9/docs/specs/jvmti.html) with
-[Kotlin Native](https://github.com/JetBrains/kotlin-native/). At this time I have only tested it on Windows.
+[Kotlin Native](https://github.com/JetBrains/kotlin-native/). As an example, it displays all the known system property
+names on agent load. At this time I have only built and tested it on Windows.
 
 In order to build, the latest `gradle` and JDK >= 8 has to be installed. Then from the cloned directory, run:
 
@@ -15,13 +16,25 @@ simply prints out `Hello, World!`, the agent can be used like so:
 
     java -agentpath:path/to/sampleagent.dll HelloWorld
 
-At this early stage, it would dump:
+When run on Windows for me, this is the output::
 
-    Begin onload
-    Creating symbols
-    Created symbols
-    Inside of Kotlin test function
-    Ran function
+    Displaying 16 property names:
+    java.vm.specification.name
+    java.vm.version
+    java.vm.name
+    java.vm.info
+    java.ext.dirs
+    java.endorsed.dirs
+    sun.boot.library.path
+    java.library.path
+    java.home
+    java.class.path
+    sun.boot.class.path
+    java.vm.specification.vendor
+    java.vm.specification.version
+    java.vm.vendor
+    sun.java.command
+    sun.java.launcher
     Hello, World!
 
-Lots more work to do like crossing platforms, properly passing the pointers to the funcs, etc.
+That's basically it for this PoC. I might add a linux version at some point.
